@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Fly Selector</title>
+<style>
+  body { margin: 0; font-family: sans-serif; }
+  .grid { display: grid; grid-template-columns: repeat(3, 1fr); grid-gap: 5px; padding: 5px; }
+  .thumb { position: relative; }
+  .thumb img { width: 100%; cursor: pointer; border: 2px solid #ccc; display: block; }
+  .thumb .number { 
+    position: absolute; top: 5px; left: 5px; 
+    background: rgba(0,0,0,0.6); color: #fff; 
+    padding: 4px 8px; border-radius: 3px; font-size: 36px; 
+  }
+  .thumb .label {
+    position: absolute; bottom: 5px; left: 50%; transform: translateX(-50%);
+    background: rgba(0,0,0,0.6); color: #fff;
+    padding: 4px 8px; border-radius: 3px; font-size: 18px;
+  }
+  .modal { display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+           background: rgba(0,0,0,0.8); justify-content: center; align-items: center; }
+  .modal-content { background: #fff; padding: 20px; max-width: 90%; max-height: 90%; overflow: auto; }
+  .modal-content img { max-width: 100%; height: auto; display: block; margin: 0 auto; }
+  .modal-content p { margin-top: 10px; }
+</style>
+</head>
+<body>
+<div class="grid">
+  <!-- Thumbnails with numbers and labels -->
+  <div class="thumb" data-index="1"><span class="number">1</span><span class="label"></span><img src="images/fly1.jpg" alt="Fly 1"></div>
+  <div class="thumb" data-index="2"><span class="number">2</span><span class="label"></span><img src="images/fly2.jpg" alt="Fly 2"></div>
+  <div class="thumb" data-index="3"><span class="number">3</span><span class="label"></span><img src="images/fly3.jpg" alt="Fly 3"></div>
+  <div class="thumb" data-index="4"><span class="number">4</span><span class="label"></span><img src="images/fly4.jpg" alt="Fly 4"></div>
+  <div class="thumb" data-index="5"><span class="number">5</span><span class="label"></span><img src="images/fly5.jpg" alt="Fly 5"></div>
+  <div class="thumb" data-index="6"><span class="number">6</span><span class="label"></span><img src="images/fly6.jpg" alt="Fly 6"></div>
+  <div class="thumb" data-index="7"><span class="number">7</span><span class="label"></span><img src="images/fly7.jpg" alt="Fly 7"></div>
+  <div class="thumb" data-index="8"><span class="number">8</span><span class="label"></span><img src="images/fly8.jpg" alt="Fly 8"></div>
+  <div class="thumb" data-index="9"><span class="number">9</span><span class="label"></span><img src="images/fly9.jpg" alt="Fly 9"></div>
+  <div class="thumb" data-index="10"><span class="number">10</span><span class="label"></span><img src="images/fly10.jpg" alt="Fly 10"></div>
+  <div class="thumb" data-index="11"><span class="number">11</span><span class="label"></span><img src="images/fly11.jpg" alt="Fly 11"></div>
+  <div class="thumb" data-index="12"><span class="number">12</span><span class="label"></span><img src="images/fly12.jpg" alt="Fly 12"></div>
+</div>
+
+<div class="modal" id="modal">
+  <div class="modal-content">
+    <img id="modalImg" src="" alt="">
+    <p id="modalDesc"></p>
+  </div>
+</div>
+
+<script>
+  const descriptions = {
+    "1": "Description for Fly 1 goes here.",
+    "2": "Description for Fly 2 goes here.",
+    "3": "Description for Fly 3 goes here.",
+    "4": "Description for Fly 4 goes here.",
+    "5": "Description for Fly 5 goes here.",
+    "6": "Description for Fly 6 goes here.",
+    "7": "Description for Fly 7 goes here.",
+    "8": "Description for Fly 8 goes here.",
+    "9": "Description for Fly 9 goes here.",
+    "10": "Description for Fly 10 goes here.",
+    "11": "Description for Fly 11 goes here.",
+    "12": "Description for Fly 12 goes here."
+  };
+
+  const names = {
+    "1": "Buzzer A", "2": "Buzzer B", "3": "Buzzer C",
+    "4": "Buzzer D", "5": "Buzzer E", "6": "Buzzer F",
+    "7": "Buzzer G", "8": "Buzzer H", "9": "Buzzer I",
+    "10": "Buzzer J", "11": "Buzzer K", "12": "Buzzer L"
+  };
+
+  // Set labels
+  document.querySelectorAll('.thumb').forEach(thumb => {
+    const idx = thumb.getAttribute('data-index');
+    thumb.querySelector('.label').textContent = names[idx];
+  });
+
+  // Thumbnail click
+  document.querySelectorAll('.thumb img').forEach(img => {
+    img.addEventListener('click', () => {
+      const idx = img.parentElement.getAttribute('data-index');
+      document.getElementById('modalImg').src = "images/fly" + idx + ".jpg";
+      document.getElementById('modalImg').alt = names[idx];
+      document.getElementById('modalDesc').textContent = descriptions[idx];
+      document.getElementById('modal').style.display = 'flex';
+    });
+  });
+
+  // Close modal
+  document.getElementById('modal').addEventListener('click', () => {
+    document.getElementById('modal').style.display = 'none';
+  });
+</script>
+</body>
+</html>
